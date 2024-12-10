@@ -1,0 +1,191 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage{booktabs} % za lepše tabele
+\usepackage{geometry}
+\geometry{
+  top=2.5cm,
+  bottom=2.5cm,
+  left=2.5cm,
+  right=2.5cm
+}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\pagestyle{empty}
+
+\begin{document}
+
+\section*{Točka 2: Obnašanje $\overline{\gamma}(G)$ na grafovskih produktih in Vizingova domneva}
+
+Raziskovanje grafičnih lastnosti na grafovskih produktih je privedlo do številnih znanih domnev in odprtih problemov v teoriji grafov. V tem razdelku preučujemo obnašanje $\overline\gamma(G)$ na direktnem in kartezičnem produktu grafov.
+\vspace{6pt}
+
+\noindent Analizo smo izvedli v SageMath. Direktni in kartezični produkti sta dobro definirani, zato smo za izračun teh produktov uporabili vgrajene funkcije. 
+\section*{Direktni produkt}
+
+V datoteki \textit{direktni\_produkt.ipynb} je izvedena analiza direktnega produkta poljubnih grafov. Program generira grafe in jih shrani v seznam \textit{grafi}. Nato naključno izbere dva grafa, \textit{g1} in \textit{g2}, ter izračuna njun direktni produkt, označen kot \textit{g3}. Za \textit{g1}, \textit{g2} in \textit{g3} izračunamo SDCTD vrednosti. Primer  rezultatov je podan spodaj:
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Izbira grafov} & \textbf{SDCTD\_graf1} & \textbf{SDCTD\_graf2} & \textbf{SDCTD\_direktni} \\ \hline
+Izbira 1   & 4 & 3 & 18 \\ \hline
+Izbira 2   & 2 & 3 & 13 \\ \hline
+Izbira 3   & 3 & 3 & 17 \\ \hline
+\vdots     & \vdots & \vdots & \vdots \\ \hline
+Izbira 99  & 4 & 3 & 23 \\ \hline
+Izbira 100 & 3 & 2 & 20 \\ \hline
+\end{tabular}
+\label{tab:sdctd-results}
+\end{table}
+
+\noindent Na podlagi dobljenih podatkov analiziramo, ali obstaja vzorec v SDCTD vrednostih direktnega produkta grafov. Naša pozornost je usmerjena v iskanje zgornje meje za \textbf{SDCTD\_direktni}, označene kot \(\overline{\gamma}(G \times H)\). Označimo še \(\overline{\gamma}(G)\) in \(\overline{\gamma}(H)\), ki predstavljata SDCTD vrednosti za \textit{graf1} in \textit{graf2}. \\
+
+\noindent Za analizo smo izvedli 1000 ponovitev, pri čemer smo naključno izbrali pare grafov in preverjali naslednje domneve:
+
+\begin{itemize}
+    \item \textbf{Domneva 1:} 
+    \[
+    \overline{\gamma}(G \times H) \leq \overline{\gamma}(G) \cdot \overline{\gamma}(H)
+    \]
+    Ta domneva velja le v \(23.02\%\) primerov, zato ni ustrezna zgornja meja.
+
+    \item \textbf{Domneva 2:} 
+    \[
+    \overline{\gamma}(G \times H) \leq 2 \cdot \overline{\gamma}(G) \cdot \overline{\gamma}(H)
+    \]
+    Z izboljšanjem meje na \(2 \cdot \overline{\gamma}(G) \cdot \overline{\gamma}(H)\) se je delež uspešno omejenih primerov povečal na \(89.99\%\).
+
+    \item \textbf{Domneva 3:} 
+    \[
+    \overline{\gamma}(G \times H) \leq 3 \cdot \overline{\gamma}(G) \cdot \overline{\gamma}(H)
+    \]
+    Ta meja je veljavna za vse primere v naši analizi, zato jo lahko sprejmemo kot zgornjo mejo za direktni produkt.
+
+    \item Preverili smo tudi meje za \(k = 4\) in \(k = 5\): 
+    \[
+    \overline{\gamma}(G \times H) \leq k \cdot \overline{\gamma}(G) \cdot \overline{\gamma}(H)
+    \]
+    V vseh primerih tudi ti meji veljata, vendar se osredotočimo na najmanjšo. Končna ugotovitev je torej naslednja:
+\end{itemize}
+
+
+\noindent \textbf{SKLEP:} Za SDCTD direktnega produkta dveh poljubnih grafov  \(G\) in \(H\) velja:
+\[
+\overline{\gamma}(G \times H) \leq 3 \cdot \overline{\gamma}(G) \cdot \overline{\gamma}(H)
+\]
+
+\section*{Kartezični produkt}
+
+V datoteki \textit{kartezicni\_produkt.ipynb} je izvedena analiza kartezičnega produkta poljubnih grafov. Analiza je podobna tisti, ki smo jo izvedli pri direktnem produktu.
+
+\noindent Program generira grafe in jih shrani v seznam \textit{grafi}. Nato naključno izbere dva grafa, \textit{g1} in \textit{g2}, ter izračuna njun kartezični produkt, označen kot \textit{g3}. Za \textit{g1}, \textit{g2} in \textit{g3} izračunamo SDCTD vrednosti.
+
+\noindent Na podlagi dobljenih podatkov analiziramo, ali obstaja vzorec v SDCTD vrednostih kartezičnega produkta grafov. Naša pozornost je usmerjena v iskanje spodnje meje za \(\overline{\gamma}(G \times H)\). Označimo še \(\overline{\gamma}(G)\) in \(\overline{\gamma}(H)\), ki predstavljata SDCTD vrednosti za \textit{graf1} in \textit{graf2}. \\
+
+\noindent Podobno kot pri direktnem produktu predpostavimo naslednje: 
+\[
+k \cdot \overline{\gamma}(G \square H) \geq \overline{\gamma}(G) \cdot \overline{\gamma}(H).
+\]
+
+
+\begin{figure}[h!]
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        % Besedilo
+        Za analizo smo izvedli 1000 ponovitev, pri čemer smo naključno izbrali pare grafov in preverjali zgornjo enačbo. Iz teh rezultatov lahko sklepamo naslednje: za \(k = 1\) pride do zelo majhnega odstopanja, saj v \(0.90\%\) primerov neenakost ne velja. Pri \(k = 2\) in \(k = 3\) pa neenakost vedno velja. 
+    \end{minipage}%
+    \hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        % Tabela
+        \begin{tabular}{@{}lcc@{}}
+        \toprule
+        \textbf{} & \textbf{Število False} & \textbf{Delež False (\%)} \\ \midrule
+        k = 1         & 9                      & 0.90\%                   \\
+        k = 2         & 0                      & 0.00\%                   \\
+        k = 3         & 0                      & 0.00\%                   \\ \bottomrule
+        \end{tabular}
+
+        \label{tab:rezultati}
+    \end{minipage}
+\end{figure}
+
+
+
+\noindent \textbf{SKLEP:} Za kartezični produkt dveh grafov \(G\) in \(H\) velja naslednja neenakost:
+\[
+2 \cdot \overline{\gamma}(G \square H) \geq \overline{\gamma}(G) \cdot \overline{\gamma}(H).
+\]
+
+\vspace{6pt}
+
+\noindent Zakaj pa pride do odstopanja pri \(k = 1\)? Odgovor je v načinu izbire grafov \(G\) in \(H\). Preverimo, kaj se zgodi, če fiksiramo graf \(G\), graf \(H\) pa je poljuben:
+\[
+k \cdot \overline{\gamma}(G \square H) \geq \overline{\gamma}(G) \cdot \overline{\gamma}(H), \quad \text{za } k = 1.
+\]
+
+
+ \noindent Z uporabo popravljene kode smo ugotovili, da v tem primeru neenakost drži. S tem smo pokazali Vizingovo domnevo.
+
+\noindent \textbf{Vizingova domneva:} Naj bosta \(G\) in \(H\) poljubna grafa. Rečemo, da graf \(G\) zadošča Vizingovi domnevi, če spodnja neenakost velja za poljuben graf \(H\). 
+\[
+\overline{\gamma}(G \square H) \geq \overline{\gamma}(G) \cdot \overline{\gamma}(H).
+\]
+
+
+
+
+
+
+\newpage
+
+\section*{Točka 3 –  Kako se obnaša $\overline\gamma(G)$, ko je minimalna ali maksimalna stopnja grafa \( G \) omejena?}
+
+Namen te analize v tem razdelku je preučiti, kako se vrednost $\overline{\gamma}(G)$ spremnija glede na minimalno ($\delta$) in maksimalno ($\Delta$) stopnjo grafa $G$.
+
+\noindent \textbf{Pristop:} Generirali smo vse možne grafe - drevesa in cikle, za število vozlišč od 2 do $n$. Za vse grafe smo izračunali minimalno stopnjo ($\delta$), maksimalno stopnjo ($\Delta$) in vrednost $\overline{\gamma}(G)$. Nato smo podatke razvrstili na različne načine:
+
+\begin{itemize}
+
+    \item Najprej smo jih ločili glede na število vozlišč. Vsaka tabela ustreza določenemu $n$.
+
+    \item Nato smo ločili grafe glede na minimalne stopnje, pri čemer je vsaka minimalna stopnja imela svojo tabelo.
+
+    \item Podobno kot v prejšni točki, smo postopek ponovili glede na maksimalno stopnjo - vsaka $\Delta$ ima svojo tabelo.
+     
+\end{itemize}    
+
+
+\noindent Na podlagi teh tabel smo analizirali podatke, da bi odkrili morebitne vzorce oziroma formulirali zaključke. Ustvarjene tabele so na voljo v datoteki \textit{vpliv\_min\_max.ipynb}. V analizi so zajeti vsi povezani grafi z do 7 vozlišč.
+
+
+
+\subsubsection*{Iz analize najdemo le eno glavno ugotovitev:}
+
+
+ Najbolj očitna ugotovitev izhaja iz analize zadnje tabele, v kateri so grafi razvrščeni glede na različne maksimalne stopnje. V tej tabeli so predstavljeni vsi grafi reda $7$, katerih maksimalna stopnja je $6$, pri čemer za vse te grafe velja $\overline{\gamma}(G) = None$. Podobno smo pregledali tudi prejšnje tabele. V tabeli za grafe z maksimalno stopnjo $5$ smo ugotovili, da za vse grafe z $6$ vozlišči prav tako velja $\overline{\gamma}(G) = None$. Na podlagi teh opažanj smo oblikovali naslednji sklep: 
+
+\begin{center}
+Če je graf $G$ reda $n$ in za ta graf velja $\Delta = n - 1$, potem je $\overline{\gamma}(G) = None$.
+\end{center}
+Pri tem je minimalna stopnja grafa poljubna. To trditev smo preverili z analizo na začetku datoteke, kjer smo testirali vse grafe z omenjenimi lastnostmi. Rezultati so pokazali, da trditev drži v 100\% primerov (v kodi označena kot E2).
+
+\noindent Nato smo preverili, ali podobna zakonitost velja tudi za minimalno stopnjo grafa. Preverili smo, ali velja: če je $\delta = n - 1$, kjer je $G$ graf z $n$ vozlišči, potem $\overline{\gamma}(G) = None$ (v kodi označena kot E3). To trditev smo prav tako potrdili. Grafov z navedenimi lastnostmi je bilo sicer malo, natančneje $7$, vendar smo pokazali, da trditev velja za vse. Za prvo ugotovitev (maksimalna stopnja $\Delta = n-1$) smo videli, da je več takih grafov, in sicer $1252$ izmed vseh generiranih in je naša predpostavka veljala pri vseh.
+
+\noindent Na podlagi analize lahko sklepamo: če ima graf $G$ maksimalno stopnjo $\Delta = n - 1$ ali minimalno stopnjo $\delta = n - 1$, potem velja $\overline{\gamma}(G) = None$. \\
+
+ 
+\noindent \textbf{Odgovor na zgornje vprašanje:} Za poljuben povezan graf \( G \) z \( n \) vozlišči minimalna ali maksimalna stopnja zavzameta neko vrednost iz množice \( \{1, 2, \dots, n-1\} \). Če za \( \delta \) ali \( \Delta \) trdimo, da mora biti maksimalna možna, potem bo za ta graf vedno veljalo \( \overline{\gamma}(G) = None \). Za grafe, pri katerih vrednosti \( \delta \) oziroma \( \Delta \) spadajo v množico \( \{1, 2, \dots, n-2\} \), pa je \( \overline{\gamma}(G) \) bodisi \text{None} bodisi neko naravno število. 
+
+\noindent Iz tabel smo prav tako opazili, da za to naravno število v večini primerov velja \( \overline{\gamma}(G) < n/2 \), kjer je \( n \) število vozlišč grafa \( G \). To smo preverili tudi v naši analizi in ugotovili, da velja v \( 98.94\% \) vseh zgeneriranih grafov (v kodi označena kot E1).
+
+
+
+
+
+
+
+
+
+
+\end{document}
