@@ -1,0 +1,107 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{dsfont}
+
+\geometry{a4paper, margin=1in}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{1. in 5. vprašanje}
+\lhead{Miha Novoselec}
+\rfoot{Stran \thepage}
+
+\begin{document}
+
+\section{1. vprašanje}
+V tej točki bomo obravnavali vprašanje, kateri grafi v odvisnosti od števila vozlišč $n$, zavzamejo največje in najmanjše SDCTD dominacijsko število. Označimo funkcijo maksimalnega SDCTD števila z $max\_st(n)$ in funkcijo minimalnega SDCTD števila $min\_st(n)$, kjer je $n \in \mathbb{N}; n \geq 4$, naša naloga bo poiskati njune ekstreme. 
+Sprva se lotimo naloge za majhne grafe, za nas bodo zanimivi le povezani in na vsaj 4 vozliščih. Problema se lotimo tako, da generiramo vse grafe na $n$ vozliščih, nato pa za vse izračunamo dominacijska števila, in izmed teh grafov izberemo graf z največjim številom in ga tudi izrišemo. 
+Ta postopek sem izvajal na grafih z največ 8 vozlišči.
+
+\vspace{12pt}
+\noindent Problema na večjih grafih sem se lotil s pomočjo algoritma Hill climbing, pri katerem je bilo ključno, da sem določil zadostno število iteracij (pri vsakem pogonu kode sem jih določil vsaj 150000), ter da sem tudi program čim večkrat pognal in tako zares dobil globalni ekstrem. 
+Vključil sem novo funkcijo, ki z verjetnostjo 0.5 spreminja povezave (dodaja, odstranjuje). Ukvarjal sem se predvsem z grafi z do dvanajst vozlišči.
+
+\vspace{12pt}
+\noindent Ugotovimo, da je maksimum funkcije $max\_st(n)$ dosežen pri $2 \lfloor \frac{n}{2} \rfloor$, $min\_st(n)$ je konstantno enaka 2. 
+
+\begin{center}
+    \begin{tabular}{|c|c|c|} 
+     \hline
+     število vozlišč & maksimalno SDCTD & minimalno SDCTD \\ [0.5ex] 
+     \hline 
+     4 & 4 & 2 \\
+     \hline
+     5 & 4 & 2 \\
+     \hline 
+     6 & 6 & 2 \\ 
+     \hline
+     7 & 6 & 2 \\
+     \hline
+     8 & 8 & 2 \\
+     \hline
+     9 & 8 & 2 \\
+     \hline
+     10 & 10 & 2 \\  
+     \hline
+     11 & 10 & 2 \\
+     \hline
+     12 & 12 & 2 \\  
+     \hline
+     \vdots & \vdots & \vdots \\  
+     \hline
+     n & $ 2 \lfloor \frac{n}{2} \rfloor$ & 2 \\ [1ex] 
+     \hline
+    \end{tabular}
+\end{center}
+
+\noindent Pri tem še enkrat poudarimo, da se ukvarjamo le s povezanimi grafi. V kolikor se ne bi, bi tudi za lihe grafe na $n$ vozliščih dobili maksimalno število enako $n$, tak bi bil graf brez povezav.
+Povejmo še, kateri grafi ustrezajo ekstremom. Opazimo, da imamo za minimum zelo veliko število grafov, ki ustrezajo pogoju minimalnosti, z vsakim vozliščem, ki ga dodamo, jih imamo več. Za razliko od max, jih je veliko v obliki v dreves le s kakšnim ciklom. Za max SDCTD pa imamo pri sodih $n$ en graf, ki je dosežen, ko gre iz vsakega vozlišča $n - 2$ povezav, pri lihih $n$ pa imamo dva grafa, katerih vozlišča imajo $n - 2$ ali pa $n - 3$ sosednjih vzolišč. Grafi vsebujejo ogromno ciklov.
+
+\section{5. vprašanje}
+Pri tej točki bomo obravali tako dominacijsko število grafa kot tudi dominacijsko število komplementa grafa. Zanima nas, za katere grafe na $n$ vozliščih je vsota največja in za katere grafe je vsota najmanjša. Definiramo dve funkciji v odvisnosti od števila vozlišč, $max\_vsota(n)$ in $min\_vsota(n)$. Upoštevamo, da število vozlišč je iz množice $\{n \in \mathbb{N}; n \geq 4\}$.
+Začnemo na majhnih grafih, do 8 vozlišč, definiramo funkcijo za vsoto, generiramo vse povezane grafe in njihove komplemente na $n$ vozliščih in izberemo ustrezne maksimume in minimume. Problema na večjih grafih, do 12 vozlišč,
+se lotimo z algoritmom Simulated annuling.
+Opazimo, da je maksimum funkcije $max\_vsota(n)$ dosežen pri 3 $\lfloor \frac{n}{2} \rfloor$, funkcija $min\_vsota(n) $ pa je konstantno enaka 4.
+
+
+\begin{center}
+    \begin{tabular}{|c|c|c|} 
+     \hline
+     število vozlišč & maksimalna vsota & minimalna vsota \\ [0.5ex] 
+     \hline 
+     4 & 6 & 4 \\
+     \hline
+     5 & 6 & 4 \\
+     \hline 
+     6 & 9 & 4 \\ 
+     \hline
+     7 & 9 & 4 \\
+     \hline
+     8 & 12 & 4 \\
+     \hline
+     9 & 12 & 4 \\
+     \hline
+     10 & 15 & 4 \\  
+     \hline
+     11 & 15 & 4 \\
+     \hline
+     12 & 18 & 4 \\  
+     \hline
+     \vdots & \vdots & \vdots \\  
+     \hline
+     n & $ 3 \lfloor \frac{n}{2} \rfloor$ & 4 \\ [1ex] 
+     \hline
+    \end{tabular}
+\end{center}
+
+\vspace{12pt}
+\noindent Maksimum je dosežen pri zelo cikličnih grafih, komplement pa je zelo preprost in nepovezan, v obliki grafov, pri katerih sta samo dve ali pa tri vozlišča povezana med seboj. Pri sodih $n$ je tak graf samo en, pri lihih pa dva. Za minimum je veliko več ustreznih grafov, za katere velja, da tako graf kot tudi njegov komplement vsebujeta cikle.
+
+\end{document}
